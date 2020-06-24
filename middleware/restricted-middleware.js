@@ -3,7 +3,7 @@ const Authentication = require('../auth/auth-model')
 
 module.exports = (req, res, next) => {
     const token = req.headers.authorization;
-    const secret = Authentication.jwtSecret;
+    const secret = Authentication.secret;
 
     if (token) {
         jwt.verify(token, secret, (error, decodedToken) => {

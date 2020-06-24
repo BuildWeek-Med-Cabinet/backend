@@ -5,7 +5,13 @@ module.exports = {
     findByToken,
     removeToken,
     addToken,
-    findByEmail
+    findByEmail,
+    secret
+}
+
+function secret() {
+    const jwtSecret = process.env.JWTKEY || "h312b312g3iu123i1"
+    return jwtSecret
 }
 
 function add(user) {

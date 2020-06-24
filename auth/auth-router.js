@@ -34,7 +34,8 @@ router.post('/login', async (req, res) => {
             }
         }
         res.status(401).json({ message: 'please enter the correct credentials' })
-    } catch(e) {
+    } catch(err) {
+        console.log(err)
         res.status(500).json({ message: 'request error' })
     }
 })
