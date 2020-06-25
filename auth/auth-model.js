@@ -10,7 +10,7 @@ module.exports = {
 }
 
 function secret() {
-    const jwtSecret = process.env.JWTKEY || "h312b312g3iu123i1"
+    const jwtSecret = process.env.JWT_SECRET || "h312b312g3iu123i1"
     return jwtSecret
 }
 

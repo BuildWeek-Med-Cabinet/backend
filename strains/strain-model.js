@@ -9,7 +9,7 @@ module.exports = {
     remove
 }
 
-function getPreferrences(id) {
+function getPreferrences() {
     return db('users as u')
         .join('users_cannabis as uc', 'u.id', 'uc.user_id')
         .join('cannabis as c', 'uc.cannabis_id', 'c.id')
@@ -28,12 +28,12 @@ function addPreferrences(user_id, cannabis_id) {
     return db('users_cannabis').insert({user_id, cannabis_id})
 }
 
-function find(strain) {
-    return db('cannabis').where({strain})
+function find() {
+    return db('marijuana')
 }
 
-function add(cannabis) {
-    return db('cannabis').insert(cannabis).returning('id')
+function add(marijuana) {
+    return db('marijuana').insert(marijuana).returning('id')
 }
 
 function remove(cannabis_id, user_id) {
