@@ -35,15 +35,40 @@ router.post('/', authentication, async (req, res) => {
 })
 
 router.delete('/:id', authentication, async (req, res) => {
-    const cannabis_id = req.params.id
-    const user_id = req.decodedToken.id
-    try {
-        const remove = await Strains.remove(cannabis_id, user_id)
-        if (remove > 0) { return res.status(200).json({ message: 'Strain has been removed successfully' })}
-        res.status(404).json({ message: 'Strain not found' })
-    } catch(e) {
-        res.status(500).json({ message: 'There was a request error' })
-    }
+    const { id } = req.params
+    
+    await Strains.remove(id)
+    .then(deleted => {
+        if (deleted) {
+            res.json({removed: deleted})
+        } else {
+            res.status(404).json({message: 'Could not find Strain with given id'})
+        }
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({message: 'There was a request error'})
+    })
+})
+    
+router.put('/:id', authentication, async (req, res) => {
+    const { id } = req.params
+    const changes = req.body
+
+    await Strains.findById(id)
+    .then(change => {
+        if (change) {
+            Strains.update(changes, id)
+            .then(updatedStrain => {
+                res.json(updatedStrain)
+            })
+        } else {
+            res.status(404).json({message: 'Could not find strain with given id'})
+        }
+    })
+    .catch(err => {
+        res.status(500).json({message: 'Failed to update strain'})
+    })
 })
 
 module.exports = router

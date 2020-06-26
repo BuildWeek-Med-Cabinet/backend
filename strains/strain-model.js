@@ -6,7 +6,10 @@ module.exports = {
     addPreferrences,
     getPreferrences,
     checkIfInPreferrences,
-    remove
+    remove,
+    findById,
+    update,
+
 }
 
 function getPreferrences() {
@@ -36,6 +39,13 @@ function add(marijuana) {
     return db('marijuana').insert(marijuana).returning('id')
 }
 
-function remove(cannabis_id, user_id) {
-    return db('users_cannabis').where({cannabis_id, user_id}).delete()
+function remove(id) {
+    return db('marijuana').where('id', Number(id)).del()
+}
+
+function findById(id) {
+    return db('marijuana').where({id})
+}
+function update(changes, id) {
+    return db('marijuana').where('id', Number(id)).update(changes)
 }
